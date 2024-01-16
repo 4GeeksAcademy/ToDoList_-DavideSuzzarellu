@@ -18,12 +18,8 @@ export const App = () => {
 
     const handleCancel = (index) => {
         tareas.splice(index, 1);
-        setTareas([...tareas]);    
-        if (tareas.length === 0) {
-            setValor("No hay tareas disponibles, escríbelas: ");
-        }
+        setTareas([...tareas]);
     }
-
     return (
         <main className="container d-flex flex-column justify-content-center align-items-center">
             <form onSubmit={handleSubmit} className="col-auto d-flex flex-column justify-content-center align-items-center border border-black">
@@ -34,7 +30,13 @@ export const App = () => {
 
                 <ul className="border d-flex flex-column align-items-start w-100 list-unstyled m-0 border border-black">
                     <li className="w-100">
-                        <input type="text" value={valor} onChange={handleChange} placeholder="Escribe Tarea: " className="w-100"></input>
+                        <input
+                            type="text"
+                            value={valor}
+                            onChange={handleChange} 
+                            placeholder={tareas.length === 0 ? "No hay tareas disponibles, escríbelas:" : "Escribe tarea:" }
+                            className="w-100"
+                        ></input>
                     </li>
                     {tareas.map((item, index) => (
                         <li key={index} className="d-flex justify-content-between align-items-center border w-100 p-1">
@@ -49,7 +51,6 @@ export const App = () => {
 
             </form>
         </main>
-
     );
 }
 
