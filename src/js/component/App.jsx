@@ -27,7 +27,7 @@ export const App = () => {
             <form id="form" className="col-auto border border-success p-4 rounded" onSubmit={handleSubmit}>
 
                 <header className="d-flex justify-content-center align-items-center">
-                    <h1>To Do List</h1>
+                    <h1 className="px-5">To Do List</h1>
                 </header>
 
                 <ul className="d-flex flex-column list-group w-100 mt-2 mx-0 border rounded">
