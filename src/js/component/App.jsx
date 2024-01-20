@@ -1,56 +1,64 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react"
+
 
 export const App = () => {
-    const [tareas, setTareas] = useState([]);
-    const [valor, setValor] = useState("");
+    const [input, setInput] = useState("")
+    const [tareas, setTareas] = useState([])
 
     const handleChange = (event) => {
-        setValor(event.target.value);
-    }
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        if (valor.trim() !== "") {
-            setTareas([...tareas, valor]);
-            setValor("");
-        }
+        setInput(event.target.value)
     }
 
     const handleCancel = (index) => {
         tareas.splice(index, 1);
         setTareas([...tareas]);
     }
-    return (
-        <main className="container d-flex flex-column justify-content-center align-items-center">
-            <form onSubmit={handleSubmit} className="col-auto d-flex flex-column justify-content-center align-items-center border border-black">
 
-                <header className="p-2">
-                    <h1>Lista de Tareas</h1>
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        if (input.trim() !== "") {
+            setTareas([...tareas, input])
+            setInput("")
+        }
+    }
+
+    return (
+        <main className="container d-flex flex-column vh-100 justify-content-center align-items-center">
+            <form id="form" className="col-auto border border-success p-4 rounded" onSubmit={handleSubmit}>
+
+                <header className="d-flex justify-content-center align-items-center">
+                    <h1>To Do List</h1>
                 </header>
 
-                <ul className="border d-flex flex-column align-items-start w-100 list-unstyled m-0 border border-black">
-                    <li className="w-100">
+                <ul className="d-flex flex-column list-group w-100 mt-2 mx-0 border rounded">
+                    <li className="list-group">
                         <input
                             type="text"
-                            value={valor}
-                            onChange={handleChange} 
-                            placeholder={tareas.length === 0 ? "No hay tareas disponibles, escríbelas:" : "Escribe tarea:" }
-                            className="w-100"
-                        ></input>
+                            value={input}
+                            className="w-100 p-2"
+                            onChange={handleChange}
+                            placeholder={tareas.length == 0 ? "Escribe la primera tarea:" : "Escribe una tarea:"}>
+                        </input>
                     </li>
-                    {tareas.map((item, index) => (
-                        <li key={index} className="d-flex justify-content-between align-items-center border w-100 p-1">
-                            {item}  <button type="button" onClick={() => handleCancel(index)} className="btn btn-link">x</button>
-                        </li>
-                    ))}
+                    {tareas.map((tarea, index) =>
+                    (<li key={index} className="list-group-item border p-2 d-flex justify-content-between ">
+                        {tarea}
+                        <button
+                            type="button"
+                            onClick={() => handleCancel(index)}
+                            className="d-flex justify-content-center align-items-center text-danger border-0  bg-white">
+                            <i className="fa-solid fa-trash"></i>
+                        </button>
+                    </li>)
+                    )}
                 </ul>
-
-                <footer className="d-flex justify-content-start align-items-center border-top p-1 w-100">
-                    <small>{tareas.length} item(s) left</small>
+                <footer className="mt-2">
+                    <small>
+                        {tareas.length == 0 ? "No hay tareas disponibles" : tareas.length == 1 ? tareas.length + " tarea disponible" : tareas.length + " tareas disponibles"}
+                    </small>
                 </footer>
-
             </form>
         </main>
-    );
+    )
 }
 
